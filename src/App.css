@@ -27,7 +27,10 @@
   border: 3px solid green;
   min-width: 200px;
   max-width: 200px;
-  margin: 1%;
+  margin: 0.4%;
+}
+.article {
+  border: 3px solid green;
 }
 .articleImg {
   max-width: 200px;
