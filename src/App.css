@@ -35,3 +35,9 @@
 .articleImg {
   max-width: 200px;
 }
+.comments {
+  border: 3px solid yellow;
+}
+.comment {
+  border: 3px solid orange;
+}
