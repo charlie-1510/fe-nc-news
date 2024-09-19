@@ -1,19 +1,36 @@
 import { useParams } from "react-router-dom";
-import { getArticle, getArticleComments, postVote } from "./API";
+import { getArticle, getArticleComments, patchVote } from "./API";
 import { useState, useEffect } from "react";
-import { Comment } from "./Comment";
+import { CommentCard } from "./Comment";
+import { PostComment } from "./PostComment";
 
 export const Article = () => {
   const { article_id } = useParams();
   const [article, setArticle] = useState({});
   const [comments, setComments] = useState([]);
   const [articleVotes, setArticleVotes] = useState();
+  const [loading, setLoading] = useState(true);
+  const [disUpVoteButton, setDisUpVoteButton] = useState(false);
+  const [disDownVoteButton, setDisDownVoteButton] = useState(false);
 
   function voteinc(num) {
+    if (num > 0) {
+      if (disDownVoteButton === true) {
+        setDisDownVoteButton(false);
+      } else {
+        setDisUpVoteButton(true);
+      }
+    } else {
+      if (disUpVoteButton === true) {
+        setDisUpVoteButton(false);
+      } else {
+        setDisDownVoteButton(true);
+      }
+    }
     setArticleVotes((votes) => {
       return votes + num;
     });
-    postVote(article.article_id, num).then((response) => {
+    patchVote(article.article_id, num).then((response) => {
       if (response.updated_votes) {
         setArticleVotes(response.updated_votes.votes);
       } else {
@@ -26,17 +43,30 @@ export const Article = () => {
   }
 
   useEffect(() => {
+    setLoading(true);
     getArticle(article_id).then((data) => {
-      setArticle(data.article);
-      setArticleVotes(data.article.votes);
+      if (data.article) {
+        setArticle(data.article);
+        setArticleVotes(data.article.votes);
+        setLoading(false);
+      } else {
+        alert("There was an error while loading the page");
+        location.reload();
+      }
     });
     getArticleComments(article_id).then((data) => {
-      setComments(data.comments);
+      if (data.comments) {
+        setComments(data.comments);
+      }
     });
   }, []);
 
   const date = new Date(article.created_at);
-  return (
+  return loading ? (
+    <div>
+      <h2>Loading ...</h2>
+    </div>
+  ) : (
     <div>
       <section className="article">
         <p>
@@ -46,10 +76,10 @@ export const Article = () => {
         <p>{article.body}</p>
         <p>Author: {article.author}</p>
         <p>Topic: {article.topic}</p>
-        <p>article ID: {article.article_id}</p>
         <p>Created: {date.toDateString()}</p>
         <p>Votes: {articleVotes} </p>
         <button
+          disabled={disUpVoteButton}
           onClick={() => {
             voteinc(1);
           }}
@@ -57,6 +87,7 @@ export const Article = () => {
           Upvote
         </button>
         <button
+          disabled={disDownVoteButton}
           onClick={() => {
             voteinc(-1);
           }}
@@ -65,10 +96,22 @@ export const Article = () => {
         </button>
         <p>Comment Count: {article.comment_count}</p>
       </section>
+      <section className="postComment">
+        <PostComment
+          article_id={article_id}
+          comments={comments}
+          setComments={setComments}
+        />
+      </section>
       <section className="comments">
-        {comments.map((comment) => {
-          return <Comment key={comment.comment_id} comment={comment} />;
-        })}
+        {comments.length > 0 ? (
+          (comments.sort((a, b) => Date(a.created_at) - Date(b.created_at)),
+          comments.map((comment) => {
+            return <CommentCard key={comment.comment_id} comment={comment} />;
+          }))
+        ) : (
+          <h3>Be the first to comment ...</h3>
+        )}
       </section>
     </div>
   );

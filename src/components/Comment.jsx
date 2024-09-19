@@ -1,4 +1,4 @@
-export const Comment = ({ comment }) => {
+export const CommentCard = ({ comment }) => {
   const date = new Date(comment.created_at);
   return (
     <div className="comment">
@@ -6,8 +6,6 @@ export const Comment = ({ comment }) => {
       <p>{comment.body}</p>
       <p>Posted on: {date.toDateString()}</p>
       <p>Votes: {comment.votes}</p>
-      {/* <p>Comment ID: {comment.comment_id}</p>
-      <p>Article ID: {comment.article_id}</p> */}
     </div>
   );
 };
