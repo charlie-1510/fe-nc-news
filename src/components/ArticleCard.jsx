@@ -8,9 +8,7 @@ export const ArticleCard = ({ article }) => {
         <img className="articleImg" src={article.article_img_url}></img>
         <b>{article.title}</b>
         {/* <p>Author: {article.author}</p> */}
-
         <p>Topic: {article.topic}</p>
-        {/* <p>article ID: {article.article_id}</p> */}
         {/* <p>Created: {date.toDateString()}</p> */}
         <p>Votes: {article.votes}</p>
         {/* <p>Comment Count: {article.comment_count}</p> */}
