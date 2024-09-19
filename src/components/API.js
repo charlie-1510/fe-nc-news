@@ -72,3 +72,15 @@ export const postComment = (article_id, username, body) => {
       return error;
     });
 };
+
+export const deleteComment = (comment_id) => {
+  return ncnewsAPI
+    .delete(`/comments/${comment_id}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.log(error, "error");
+      return error;
+    });
+};

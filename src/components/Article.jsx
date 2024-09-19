@@ -3,6 +3,7 @@ import { getArticle, getArticleComments, patchVote } from "./API";
 import { useState, useEffect } from "react";
 import { CommentCard } from "./Comment";
 import { PostComment } from "./PostComment";
+import { deleteComment } from "./API";
 
 export const Article = () => {
   const { article_id } = useParams();
@@ -12,6 +13,7 @@ export const Article = () => {
   const [loading, setLoading] = useState(true);
   const [disUpVoteButton, setDisUpVoteButton] = useState(false);
   const [disDownVoteButton, setDisDownVoteButton] = useState(false);
+  const [refreshComments, setRefreshComments] = useState(1);
 
   function voteinc(num) {
     if (num > 0) {
@@ -41,6 +43,28 @@ export const Article = () => {
       }
     });
   }
+  function removeComment(comment_id) {
+    setComments((comments) => {
+      return comments.filter((comment) => {
+        return comment.comment_id !== comment_id;
+      });
+    });
+
+    deleteComment(comment_id).then((response) => {
+      if (response.status !== 204) {
+        alert("There was an error while deleting your comment");
+        setRefreshComments(Date.now());
+      }
+    });
+  }
+
+  useEffect(() => {
+    getArticleComments(article_id).then((data) => {
+      if (data.comments) {
+        setComments(data.comments);
+      }
+    });
+  }, [refreshComments]);
 
   useEffect(() => {
     setLoading(true);
@@ -52,11 +76,6 @@ export const Article = () => {
       } else {
         alert("There was an error while loading the page");
         location.reload();
-      }
-    });
-    getArticleComments(article_id).then((data) => {
-      if (data.comments) {
-        setComments(data.comments);
       }
     });
   }, []);
@@ -101,13 +120,20 @@ export const Article = () => {
           article_id={article_id}
           comments={comments}
           setComments={setComments}
+          setRefreshPage={setRefreshComments}
         />
       </section>
       <section className="comments">
         {comments.length > 0 ? (
           (comments.sort((a, b) => Date(a.created_at) - Date(b.created_at)),
           comments.map((comment) => {
-            return <CommentCard key={comment.comment_id} comment={comment} />;
+            return (
+              <CommentCard
+                key={comment.comment_id}
+                comment={comment}
+                removeComment={removeComment}
+              />
+            );
           }))
         ) : (
           <h3>Be the first to comment ...</h3>

@@ -6,9 +6,18 @@ import { User } from "./User";
 export const Login = () => {
   const { currentUser, setCurrentUser } = useContext(UserContext);
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+    setLoading(true);
     getUsers().then(({ users }) => {
-      setUsers(users);
+      if (users.length > 0) {
+        setUsers(users);
+        setLoading(false);
+      } else {
+        alert("There was an error while loading the page");
+        location.reload();
+      }
     });
   }, []);
 
@@ -21,7 +30,11 @@ export const Login = () => {
     setCurrentUser({});
   }
 
-  return (
+  return loading ? (
+    <div>
+      <h2>Loading ...</h2>
+    </div>
+  ) : (
     <div className="login">
       {users.map((user) => {
         return (

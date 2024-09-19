@@ -3,7 +3,7 @@ import { postComment } from "./API";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 
-export const PostComment = ({ article_id, comments, setComments }) => {
+export const PostComment = ({ article_id, setComments, setRefreshPage }) => {
   const [commentInput, setCommentInput] = useState("");
   const [postingComment, setPostingComment] = useState(false);
   const { currentUser } = useContext(UserContext);
@@ -32,6 +32,7 @@ export const PostComment = ({ article_id, comments, setComments }) => {
         if (response.comment_posted) {
           setPostingComment(false);
           setCommentInput("");
+          setRefreshPage(Date.now());
         } else {
           alert("There was an error while posting your comment");
           setComments((comments) => {
