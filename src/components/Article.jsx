@@ -44,15 +44,19 @@ export const Article = () => {
     });
   }
   function removeComment(comment_id) {
-    setComments((comments) => {
-      return comments.filter((comment) => {
-        return comment.comment_id !== comment_id;
-      });
+    const deletedComment = comments.filter((comment) => {
+      return comment.comment_id === comment_id;
+    })[0];
+    const delComIndex = comments.indexOf(deletedComment);
+    const newComments = comments.filter((comment) => {
+      return comment.comment_id !== comment_id;
     });
-
+    setComments(newComments);
     deleteComment(comment_id).then((response) => {
       if (response.status !== 204) {
         alert("There was an error while deleting your comment");
+        newComments.splice(delComIndex, 0, deletedComment);
+        setComments(newComments);
         setRefreshComments(Date.now());
       }
     });
