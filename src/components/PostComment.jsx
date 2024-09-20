@@ -5,17 +5,23 @@ import { UserContext } from "../contexts/UserContext";
 
 export const PostComment = ({ article_id, setComments, setRefreshPage }) => {
   const [commentInput, setCommentInput] = useState("");
-  const [postingComment, setPostingComment] = useState(false);
+  const [postingComment, setPostingComment] = useState(true);
   const { currentUser } = useContext(UserContext);
+
   function handleChange(e) {
     setCommentInput(e.target.value);
+    if (e.target.value.length === 0) {
+      setPostingComment(true);
+    } else {
+      setPostingComment(false);
+    }
   }
 
   function submitForm(e) {
     e.preventDefault();
     setPostingComment(true);
     const newComId = Date.now();
-    const body = {
+    const newComment = {
       article_id: article_id,
       author: currentUser.username,
       body: commentInput,
@@ -25,7 +31,7 @@ export const PostComment = ({ article_id, setComments, setRefreshPage }) => {
     };
 
     setComments((comments) => {
-      return [body, ...comments];
+      return [newComment, ...comments];
     });
     postComment(article_id, currentUser.username, commentInput).then(
       (response) => {

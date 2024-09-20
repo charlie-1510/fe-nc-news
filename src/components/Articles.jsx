@@ -10,7 +10,6 @@ export const Articles = ({ topics }) => {
   const [order, setOrder] = useState("asc");
   const { topic } = useParams();
   let [searchParams, setSearchParams] = useSearchParams();
-  console.log(topics, "topics here");
 
   useEffect(() => {
     setLoading(true);
@@ -20,7 +19,6 @@ export const Articles = ({ topics }) => {
         return top.slug === topic;
       })
     ) {
-      console.log(this);
       window.location.replace("/error");
     } else {
       setSearchParams({ sort_by: sortBy, order: order });
@@ -46,7 +44,6 @@ export const Articles = ({ topics }) => {
       Sort By:
       <select
         onChange={(e) => {
-          console.log(e.target.value, "cat");
           setSortBy(e.target.value);
         }}
         value={sortBy}
@@ -58,7 +55,6 @@ export const Articles = ({ topics }) => {
       Order:
       <select
         onChange={(e) => {
-          console.log(e.target.value, "asc");
           setOrder(e.target.value);
         }}
         value={order}
