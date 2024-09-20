@@ -75,7 +75,7 @@ export const Article = () => {
         setLoading(false);
       } else {
         alert("There was an error while loading the page");
-        location.reload();
+        window.location.replace("/error");
       }
     });
   }, []);
