@@ -4,9 +4,21 @@ const ncnewsAPI = axios.create({
   baseURL: "https://ncproject-4nhu.onrender.com/api",
 });
 
-export const getArticles = () => {
+export const getArticles = (topic) => {
   return ncnewsAPI
-    .get("/articles")
+    .get("/articles", { params: { topic: topic } })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error, "error");
+      return error;
+    });
+};
+
+export const getTopics = () => {
+  return ncnewsAPI
+    .get("/topics")
     .then((response) => {
       return response.data;
     })

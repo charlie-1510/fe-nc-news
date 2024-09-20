@@ -1,14 +1,16 @@
 import { ArticleCard } from "./ArticleCard";
 import { getArticles } from "./API";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 export const Articles = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { topic } = useParams();
 
   useEffect(() => {
     setLoading(true);
-    getArticles().then((data) => {
+    getArticles(topic).then((data) => {
       if (data.articles) {
         setArticles(data.articles);
         setLoading(false);
@@ -17,7 +19,7 @@ export const Articles = () => {
         location.reload();
       }
     });
-  }, []);
+  }, [topic]);
 
   return loading ? (
     <div>
