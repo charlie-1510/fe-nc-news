@@ -1,28 +1,39 @@
 import { ArticleCard } from "./ArticleCard";
 import { getArticles } from "./API";
 import { useState, useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams, Navigate, Route } from "react-router-dom";
 
-export const Articles = () => {
+export const Articles = ({ topics }) => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState("created_at");
   const [order, setOrder] = useState("asc");
   const { topic } = useParams();
   let [searchParams, setSearchParams] = useSearchParams();
+  console.log(topics, "topics here");
 
   useEffect(() => {
     setLoading(true);
-    setSearchParams({ sort_by: sortBy, order: order });
-    getArticles(topic, sortBy, order).then((data) => {
-      if (data.articles) {
-        setArticles(data.articles);
-        setLoading(false);
-      } else {
-        alert("There was an error while loading the page");
-        location.reload();
-      }
-    });
+    if (
+      topic &&
+      !topics.some((top) => {
+        return top.slug === topic;
+      })
+    ) {
+      console.log(this);
+      window.location.replace("/error");
+    } else {
+      setSearchParams({ sort_by: sortBy, order: order });
+      getArticles(topic, sortBy, order).then((data) => {
+        if (data.articles) {
+          setArticles(data.articles);
+          setLoading(false);
+        } else {
+          alert("There was an error while loading the page");
+          window.location.replace("/error");
+        }
+      });
+    }
   }, [topic, sortBy, order]);
 
   return loading ? (
