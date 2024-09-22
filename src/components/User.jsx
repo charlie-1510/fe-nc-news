@@ -1,7 +1,6 @@
-export const User = ({ user, currentUser, handleLoginClick, logout }) => {
+export const User = ({ user, currentUser, handleLoginClick /*, logout */ }) => {
   return (
     <div className="user">
-      <h2>This is a user</h2>
       <p>Name: {user.name}</p>
       <p>Username: {user.username}</p>
       <img className="userImg" src={user.avatar_url}></img>
@@ -13,7 +12,7 @@ export const User = ({ user, currentUser, handleLoginClick, logout }) => {
           </button> */}
         </>
       ) : (
-        <p>
+        <div class="loginButton">
           <button
             onClick={(e) => {
               e.preventDefault();
@@ -22,7 +21,7 @@ export const User = ({ user, currentUser, handleLoginClick, logout }) => {
           >
             Login
           </button>
-        </p>
+        </div>
       )}
     </div>
   );

@@ -39,8 +39,7 @@ export const Articles = ({ topics }) => {
       <h2>Loading ...</h2>
     </div>
   ) : (
-    <div className="articles">
-      <h2>This is the Articles page</h2>
+    <div className="articles pageWidth">
       Sort By:
       <select
         onChange={(e) => {

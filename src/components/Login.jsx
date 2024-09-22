@@ -25,17 +25,17 @@ export const Login = () => {
     setCurrentUser(user);
   };
 
-  function logout(e) {
-    e.preventDefault;
-    setCurrentUser({});
-  }
+  // function logout(e) {
+  //   e.preventDefault;
+  //   setCurrentUser({});
+  // }
 
   return loading ? (
     <div>
       <h2>Loading ...</h2>
     </div>
   ) : (
-    <div className="login">
+    <div className="login pageWidth">
       {users.map((user) => {
         return (
           <User
@@ -43,7 +43,7 @@ export const Login = () => {
             user={user}
             currentUser={currentUser}
             handleLoginClick={handleLoginClick}
-            logout={logout}
+            // logout={logout}
           />
         );
       })}
