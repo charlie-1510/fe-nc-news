@@ -90,11 +90,10 @@ export const Article = () => {
       <h2>Loading ...</h2>
     </div>
   ) : (
-    <div>
+    <div className="articleContainer">
       <section className="article">
-        <p>
-          <b>{article.title}</b>
-        </p>
+        <h1 id="articleHeader">{article.title}</h1>
+
         <img className="articleFullImg" src={article.article_img_url}></img>
         <p>{article.body}</p>
         <p>Author: {article.author}</p>

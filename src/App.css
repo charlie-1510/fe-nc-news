@@ -1,52 +1,138 @@
-#root {
-  max-width: 90%;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+body {
+  background-color: #f6f6f6;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 .app {
-  border: 3px solid wheat;
+  display: flex;
+  flex-direction: column;
+}
+.pageWidth {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0;
 }
 .header {
-  border: 3px solid blue;
+  background: #ffffff;
+}
+.headerSection {
+  background: #ffffff;
+  display: flex;
+  flex: auto;
+  justify-content: space-between;
+}
+.headerWelcomeSection {
+  background: #ffffff;
+}
+
+.loginImg {
+  width: 50px;
+  padding-left: 10px;
 }
 .navigator {
-  border: 3px solid red;
+  background: #ffffff;
+}
+
+.navigatorList {
+  background: #ffffff;
+  display: flex;
+  flex: auto;
+  justify-content: baseline;
+  list-style: none;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-left: 0;
+  padding-left: 0;
+}
+.navLoginSection {
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+}
+.topicItem {
+  display: flex;
+  align-items: center;
+  padding-right: 0.5rem;
+}
+#homeNav {
+  padding-left: 0;
+}
+.logoSection {
+  padding-right: 20px;
+  display: flex;
+  align-items: center;
 }
 .articles {
-  border: 3px solid purple;
+  margin: 0 auto;
 }
 .articleList {
-  border: 3px solid brown;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.articleCard {
+  background: #ffffff;
+  min-width: 200px;
+  max-width: 200px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.articleContainer {
+  max-width: 80rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+.article {
+  text-align: center;
+  max-width: 50rem;
+  margin: 0 auto;
+}
+#articleHeader {
+  font-size: 2.75rem;
+}
+.articleImg {
+  max-width: 200px;
+}
+.userImg {
+  max-width: 150px;
+  max-height: 150px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+.articleFullImg {
+  max-width: 50rem;
+  width: 100%;
+}
+.comments {
+  border: 1px solid lightgray;
+}
+.comment {
+  border: 1px solid lightgray;
+}
+.postComment {
+  border: 1px solid lightgray;
+}
+.login {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
 }
-.articleCard {
-  border: 3px solid green;
-  min-width: 200px;
-  max-width: 200px;
-  margin: 0.4%;
+.user {
+  background: #ffffff;
+  margin: 10px;
+  max-width: 150px;
+  width: 20%;
 }
-.article {
-  border: 3px solid green;
+.loginButton {
+  margin: 0px auto auto;
+  text-align: center;
 }
-.articleImg {
-  max-width: 200px;
-}
-.articleFullImg {
-  max-width: 90%;
-}
-.comments {
-  border: 3px solid yellow;
-}
-.comment {
-  border: 3px solid orange;
-}
-.postComment {
-  border: 3px solid blue;
-}
-.error {
+/* .error {
   border: 3px solid navy;
-}
+} */
